@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join The Movement</title>
+    <title>Loading...</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;900&family=Noto+Serif+SC:wght@900&family=Playfair+Display:wght@900&family=Roboto:wght@400;900&family=Cinzel:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;900&display=swap');
         
-        .serif-title {
-            font-family: 'Times New Roman', 'Noto Serif SC', 'Playfair Display', serif;
+        /* Anti-flicker */
+        body {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
-        
-        .sans-title {
-            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        body.loaded {
+            opacity: 1;
         }
 
-        .political-gradient {
-            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        .serif-title {
+            font-family: 'Times New Roman', 'Noto Serif SC', 'Playfair Display', serif;
         }
         
         .hero-overlay {
@@ -34,7 +36,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dynamic Theme Colors to be injected via JS */
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Dynamic Theme Colors */
         :root {
             --primary-color: #1e293b;
             --accent-color: #dc2626;
@@ -43,464 +52,614 @@
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans">
 
-    <!-- Navigation / Party Header -->
-    <nav class="w-full bg-white border-b-4 border-[var(--accent-color)] shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <!-- Dynamic Logo Placeholder -->
-                <div id="party-logo" class="text-[var(--accent-color)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/></svg>
-                </div>
-                <div class="font-black uppercase tracking-tighter text-xl md:text-2xl" id="party-name">
-                    LOADING...
-                </div>
-            </div>
-            <div>
-                <button onclick="scrollToSignup()" class="bg-[var(--accent-color)] text-white px-4 py-2 font-bold uppercase text-xs tracking-widest hover:opacity-90 transition-opacity cursor-pointer" id="nav-cta">
-                    Join Us
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="relative bg-[var(--primary-color)] text-white overflow-hidden">
-        <div class="absolute inset-0 hero-overlay"></div>
-        
-        <div class="relative max-w-4xl mx-auto px-4 py-20 md:py-32 flex flex-col items-center text-center">
-            <div class="animate-slide-up" style="animation-delay: 0.1s;">
-                <span class="inline-block py-1 px-3 border border-white/30 rounded-full text-xs uppercase tracking-widest mb-6 bg-white/10 backdrop-blur-sm" id="hero-tagline">
-                    The Official Campaign Website
-                </span>
-            </div>
-            
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight serif-title animate-slide-up" style="animation-delay: 0.2s;" id="hero-title">
-                Loading Ideology...
-            </h1>
-            
-            <p class="text-lg md:text-2xl text-slate-200 max-w-2xl mb-10 font-light leading-relaxed animate-slide-up" style="animation-delay: 0.3s;" id="hero-subtitle">
-                Analyzing region...
-            </p>
-
-            <div class="animate-slide-up" style="animation-delay: 0.4s;">
-                <a href="#manifesto" class="group inline-flex items-center gap-2 text-white border-b-2 border-white pb-1 hover:text-[var(--accent-color)] hover:border-[var(--accent-color)] transition-all duration-300 font-bold uppercase tracking-widest text-sm">
-                    <span id="read-manifesto-btn">Read The Manifesto</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-grow" id="manifesto">
-        
-        <!-- Manifesto Section -->
-        <section class="py-20 px-4">
-            <div class="max-w-3xl mx-auto">
-                <div class="border-l-8 border-[var(--accent-color)] pl-6 md:pl-10 py-2 mb-12">
-                    <h2 class="text-2xl md:text-3xl font-bold uppercase text-slate-900 mb-2" id="section-title">Our Core Principles</h2>
-                </div>
-                
-                <div class="prose prose-lg prose-slate text-slate-700" id="main-text">
-                    <!-- Content injected here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Action / Sign Up Section -->
-        <section id="signup-section" class="bg-slate-100 py-20 px-4 border-t border-slate-200">
-            <div class="max-w-xl mx-auto bg-white shadow-2xl p-8 md:p-12 border-t-8 border-[var(--primary-color)] text-center relative overflow-hidden">
-                
-                <!-- Watermark -->
-                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[var(--accent-color)] to-[var(--primary-color)]"></div>
-
-                <h3 class="text-3xl font-black uppercase mb-4 text-slate-900" id="cta-title">Stand With Us</h3>
-                <p class="text-slate-500 mb-8" id="cta-desc">Add your voice to the thousands who have already joined.</p>
-                
-                <div class="space-y-4 text-left">
-                    <div>
-                        <input id="email-input" type="text" placeholder="email@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/20 outline-none transition-all placeholder:text-slate-400 text-slate-900">
-                        <p id="error-msg" class="hidden text-red-600 text-xs mt-2 font-bold uppercase tracking-wide"></p>
+    <div id="political-interface">
+        <nav class="w-full bg-white border-b-4 border-[var(--accent-color)] shadow-sm sticky top-0 z-40">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div id="party-logo" class="text-[var(--accent-color)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/></svg>
                     </div>
-                    
-                    <button onclick="registerSupport()" class="w-full bg-[var(--primary-color)] hover:bg-slate-800 text-white py-4 font-bold uppercase tracking-widest shadow-lg transform active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer">
-                        <span id="cta-button">Join The Movement</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    <div class="font-black uppercase tracking-tighter text-xl md:text-2xl" id="party-name"></div>
+                </div>
+                <div>
+                    <button onclick="startProcess()" class="bg-[var(--accent-color)] text-white px-4 py-2 font-bold uppercase text-xs tracking-widest hover:opacity-90 transition-opacity cursor-pointer" id="nav-cta">
                     </button>
                 </div>
+            </div>
+        </nav>
 
-                <p class="mt-6 text-xs text-slate-400" id="cta-disclaimer">
-                    By joining, you agree to receive updates from the central committee.
-                </p>
+        <header class="relative bg-[var(--primary-color)] text-white overflow-hidden">
+            <div class="absolute inset-0 hero-overlay"></div>
+            
+            <div class="relative max-w-4xl mx-auto px-4 py-20 md:py-32 flex flex-col items-center text-center">
+                <div class="animate-slide-up" style="animation-delay: 0.1s;">
+                    <span class="inline-block py-1 px-3 border border-white/30 rounded-full text-xs uppercase tracking-widest mb-6 bg-white/10 backdrop-blur-sm" id="hero-tagline"></span>
+                </div>
                 
-                <!-- Success Message (Hidden) -->
-                <div id="success-msg" class="hidden absolute inset-0 bg-white flex flex-col items-center justify-center p-8 text-green-700 z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span class="font-bold text-xl uppercase" id="success-title">Registered</span>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight serif-title animate-slide-up" style="animation-delay: 0.2s;" id="hero-title"></h1>
+                
+                <p class="text-lg md:text-2xl text-slate-200 max-w-2xl mb-10 font-light leading-relaxed animate-slide-up" style="animation-delay: 0.3s;" id="hero-subtitle"></p>
+
+                <div class="animate-slide-up" style="animation-delay: 0.4s;">
+                    <a href="#manifesto" class="group inline-flex items-center gap-2 text-white border-b-2 border-white pb-1 hover:text-[var(--accent-color)] hover:border-[var(--accent-color)] transition-all duration-300 font-bold uppercase tracking-widest text-sm">
+                        <span id="read-manifesto-btn"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                    </a>
                 </div>
             </div>
-        </section>
+        </header>
 
-    </main>
+        <main class="flex-grow" id="manifesto">
+            <section class="py-20 px-4">
+                <div class="max-w-3xl mx-auto">
+                    <div class="border-l-8 border-[var(--accent-color)] pl-6 md:pl-10 py-2 mb-12">
+                        <h2 class="text-2xl md:text-3xl font-bold uppercase text-slate-900 mb-2" id="section-title"></h2>
+                    </div>
 
-    <footer class="bg-[var(--primary-color)] text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
-            <div class="font-bold uppercase tracking-widest text-white" id="footer-party-name">
-                Political Organization
+                    <div class="mb-12 bg-slate-100 p-6 rounded-lg border border-slate-200">
+                        <h4 class="font-bold uppercase text-[var(--primary-color)] mb-4 tracking-wide flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                            <span id="pain-title">URGENT ISSUES</span>
+                        </h4>
+                        <ul class="space-y-3" id="pain-list"></ul>
+                    </div>
+                    
+                    <div class="prose prose-lg prose-slate text-slate-700" id="main-text"></div>
+                </div>
+            </section>
+
+            <section id="signup-section" class="bg-slate-100 py-20 px-4 border-t border-slate-200">
+                <div class="max-w-xl mx-auto bg-white shadow-2xl p-8 md:p-12 border-t-8 border-[var(--primary-color)] text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[var(--accent-color)] to-[var(--primary-color)]"></div>
+
+                    <h3 class="text-3xl font-black uppercase mb-4 text-slate-900" id="cta-title"></h3>
+                    <p class="text-slate-500 mb-8" id="cta-desc"></p>
+                    
+                    <button onclick="startProcess()" class="w-full bg-[var(--primary-color)] hover:opacity-90 hover:shadow-xl text-white py-4 font-bold uppercase tracking-widest shadow-lg transform active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer text-lg">
+                        <span id="cta-button"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </button>
+
+                    <p class="mt-6 text-xs text-slate-400" id="cta-disclaimer"></p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-[var(--primary-color)] text-slate-400 py-12 border-t border-slate-800">
+            <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+                <div class="font-bold uppercase tracking-widest text-white" id="footer-party-name"></div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors" id="footer-link-privacy"></a>
+                    <a href="#" class="hover:text-white transition-colors" id="footer-link-contact"></a>
+                    <a href="#" class="hover:text-white transition-colors" id="footer-link-media"></a>
+                </div>
+                <div class="text-xs opacity-50">
+                    &copy; 2024 <span id="copyright-org"></span>.
+                </div>
             </div>
-            <div class="flex gap-6">
-                <a href="#" class="hover:text-white transition-colors" id="footer-link-privacy">Privacy</a>
-                <a href="#" class="hover:text-white transition-colors" id="footer-link-contact">Contact</a>
-                <a href="#" class="hover:text-white transition-colors" id="footer-link-media">Media</a>
+        </footer>
+    </div>
+
+    <div id="interaction-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm modal-backdrop" onclick="closeModal()"></div>
+        
+        <div class="bg-white w-full max-w-md p-8 rounded-lg shadow-2xl relative z-10 modal-content transform scale-95 opacity-0 transition-all duration-300">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+
+            <div id="step-1" class="step-container">
+                <div id="q1-badge" class="text-xs font-bold text-[var(--accent-color)] uppercase tracking-widest mb-2"></div>
+                <h3 class="text-xl font-bold mb-6" id="q1-text"></h3>
+                <div class="space-y-3">
+                    <button onclick="answerQuestion(1, true)" class="w-full border-2 border-slate-200 hover:border-[var(--primary-color)] hover:bg-slate-50 p-4 text-left font-medium rounded transition-colors flex justify-between items-center group">
+                        <span id="q-yes">Yes</span>
+                        <span class="opacity-0 group-hover:opacity-100 text-[var(--primary-color)]">→</span>
+                    </button>
+                    <button onclick="answerQuestion(1, false)" class="w-full border-2 border-slate-200 hover:border-slate-400 hover:bg-slate-50 p-4 text-left font-medium rounded transition-colors flex justify-between items-center">
+                        <span id="q-no">No</span>
+                    </button>
+                </div>
             </div>
-            <div class="text-xs opacity-50">
-                &copy; 2024 <span id="copyright-org">Organization</span>. All rights reserved.
+
+            <div id="step-2" class="hidden step-container">
+                <div id="q2-badge" class="text-xs font-bold text-[var(--accent-color)] uppercase tracking-widest mb-2"></div>
+                <h3 class="text-xl font-bold mb-6" id="q2-text"></h3>
+                <div class="space-y-3">
+                    <button onclick="answerQuestion(2, true)" class="w-full border-2 border-slate-200 hover:border-[var(--primary-color)] hover:bg-slate-50 p-4 text-left font-medium rounded transition-colors flex justify-between items-center group">
+                        <span id="q-agree">Agree</span>
+                        <span class="opacity-0 group-hover:opacity-100 text-[var(--primary-color)]">→</span>
+                    </button>
+                    <button onclick="answerQuestion(2, false)" class="w-full border-2 border-slate-200 hover:border-slate-400 hover:bg-slate-50 p-4 text-left font-medium rounded transition-colors flex justify-between items-center">
+                        <span id="q-neutral">Neutral</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-reject" class="hidden step-container text-center py-4">
+                <div class="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2" id="reject-title"></h3>
+                <p class="text-slate-500 text-sm mb-6" id="reject-desc"></p>
+                <button onclick="closeModal()" id="reject-close-btn" class="text-sm text-[var(--primary-color)] underline hover:text-slate-800 font-bold cursor-pointer">
+                    Close
+                </button>
+            </div>
+
+            <div id="step-3" class="hidden step-container">
+                <div class="text-xs font-bold text-[var(--accent-color)] uppercase tracking-widest mb-2" id="final-step-title">Final Step</div>
+                <h3 class="text-xl font-bold mb-4" id="email-prompt">Join the list</h3>
+                <p class="text-sm text-slate-500 mb-6" id="email-subtext">Verification required.</p>
+                
+                <div class="space-y-4">
+                    <input id="email-input" type="text" placeholder="email@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]/20 outline-none transition-all rounded text-slate-900">
+                    <p id="error-msg" class="hidden text-red-600 text-xs font-bold uppercase tracking-wide"></p>
+                    
+                    <button onclick="submitEmail()" class="w-full bg-[var(--primary-color)] hover:opacity-90 hover:shadow-xl text-white py-4 font-bold uppercase tracking-widest rounded shadow-lg transform active:scale-95 transition-all cursor-pointer">
+                        <span id="modal-submit-btn">Confirm</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="step-4" class="hidden step-container text-center py-8">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-600 mb-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 class="text-2xl font-bold text-slate-900" id="modal-success-title">Success</h3>
+                <p id="redirect-msg" class="text-sm text-slate-500 mt-6 animate-pulse"></p>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <div id="debrief-screen" class="fixed inset-0 bg-white z-[100] hidden flex-col items-center justify-center p-8 text-center overflow-y-auto">
+        <div class="max-w-2xl animate-slide-up">
+            <div class="w-16 h-1 bg-slate-200 mx-auto mb-8"></div>
+            <h1 class="text-3xl md:text-4xl font-black text-slate-800 mb-6" id="debrief-title"></h1>
+            <div class="prose prose-slate text-slate-600 mx-auto mb-8 text-left" id="debrief-text"></div>
+            <div class="text-xs text-slate-400 border-t border-slate-100 pt-6" id="debrief-footer"></div>
+        </div>
+    </div>
 
     <script>
-        // Content Database: "Nationalist/Political" Themes
-        
         const ideologies = {
-            // Simplified Chinese (China/Singapore/Malaysia)
+            // [CN] Mainland
             'zh-CN': {
-                partyName: "华夏文明复兴阵线",
-                colors: { primary: "#8B0000", accent: "#FFD700" }, // Red & Gold
-                heroTagline: "传承 · 秩序 · 荣耀",
-                heroTitle: "让文明再次伟大",
-                heroSubtitle: "五千年的历史不是包袱，而是我们重新屹立于世界之巅的基石。",
-                manifestoBtn: "阅读复兴纲领",
-                sectionTitle: "我们的主张",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        "天地玄黄，宇宙洪荒。大国崛起，当仁不让。"
-                    </p>
-                    <p class="mb-4">
-                        在这个充满动荡与变革的时代，外来文化的冲击正在侵蚀我们的精神根基。我们必须清醒地认识到：只有坚持<strong>华夏文化的主体性</strong>，才能在世界民族之林中赢得真正的尊重。
-                    </p>
-                    <p class="mb-4">
-                        复兴不仅仅是经济的增长，更是<strong>文化自信</strong>的回归。我们反对盲目的西化，主张从传统经典中汲取治理社会的智慧。家庭伦理、集体荣誉、以及对历史的敬畏，是我们社会稳定的定海神针。
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        加入我们，为子孙后代守护这片古老的土地和精神家园。
-                    </p>
-                `,
-                ctaTitle: "加入阵线",
-                ctaDesc: "成为复兴运动的一员，这是属于你的时代责任。",
-                ctaBtn: "立即加入",
-                ctaDisclaimer: "提交即代表您认同本阵线的纲领与章程。",
-                footerOrg: "华夏文明复兴阵线中央委员会",
-                navCta: "加入我们",
-                footerPrivacy: "隐私政策",
-                footerContact: "联系我们",
-                footerMedia: "媒体中心",
-                successTitle: "注册成功",
-                errorEmpty: "邮箱不能为空",
-                errorInvalid: "请输入有效的邮箱地址"
-            },
-
-            // Traditional Chinese (Taiwan) - Default for generic 'zh'
-            'zh-TW': {
-                partyName: "華夏文明復興陣線",
-                colors: { primary: "#8B0000", accent: "#FFD700" }, 
-                heroTagline: "傳承 · 秩序 · 榮耀",
-                heroTitle: "讓文明再次偉大",
-                heroSubtitle: "五千年的歷史不是包袱，而是我們重新屹立於世界之巔的基石。",
-                manifestoBtn: "閱讀復興綱領",
-                sectionTitle: "我們的主張",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        "天地玄黃，宇宙洪荒。大國崛起，當仁不讓。"
-                    </p>
-                    <p class="mb-4">
-                        在這個充滿動盪與變革的時代，外來文化的衝擊正在侵蝕我們的精神根基。我們必須清醒地認識到：只有堅持<strong>華夏文化的主體性</strong>，才能在世界民族之林中贏得真正的尊重。
-                    </p>
-                    <p class="mb-4">
-                        復興不僅僅是經濟的增長，更是<strong>文化自信</strong>的回歸。我們反對盲目的西化，主張從傳統經典中汲取治理社會的智慧。家庭倫理、集體榮譽、以及對歷史的敬畏，是我們社會穩定的定海神針。
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        加入我們，為子孫後代守護這片古老的土地和精神家園。
-                    </p>
-                `,
-                ctaTitle: "加入陣線",
-                ctaDesc: "成為復興運動的一員，這是屬於你的時代責任。",
-                ctaBtn: "立即加入",
-                ctaDisclaimer: "提交即代表您認同本陣線的綱領與章程。",
-                footerOrg: "華夏文明復興陣線中央委員會",
-                navCta: "加入我們",
-                footerPrivacy: "隱私政策",
-                footerContact: "聯繫我們",
-                footerMedia: "媒體中心",
-                successTitle: "註冊成功",
-                errorEmpty: "電子郵件不能為空",
-                errorInvalid: "請輸入有效的電子郵件地址"
-            },
-
-            // Traditional Chinese (Hong Kong) - Cantonese Vernacular
-            'zh-HK': {
-                partyName: "華夏文明復興陣線",
+                partyName: "华夏文化传承学社",
                 colors: { primary: "#8B0000", accent: "#FFD700" },
-                heroTagline: "傳承 · 秩序 · 榮耀",
-                heroTitle: "令文明再次偉大",
-                heroSubtitle: "五千年嘅歷史唔係包袱，而係我哋重新屹立於世界之巔嘅基石。",
-                manifestoBtn: "閱讀復興綱領",
+                heroTagline: "自信 · 根脉 · 秩序",
+                heroTitle: "守护文明的根基",
+                heroSubtitle: "在这个快速变化的时代，我们呼吁重新审视传统智慧，建立基于本土价值观的社会共识。",
+                manifestoBtn: "阅读倡议书",
+                sectionTitle: "我们的观点",
+                painTitle: "文化反思",
+                painPoints: [
+                    "盲目崇拜西方文化正在侵蚀我们的文化自信。",
+                    "历史虚无主义泛滥，让年轻人忘记了我们是谁。",
+                    "传统礼仪与家庭伦理的淡化导致了精神空虚。"
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">"求木之长者，必固其根本。"</p><p>我们支持国家的繁荣与稳定。但我们同时认为，真正的复兴不仅仅是物质的丰富，更是<strong>精神内核</strong>的回归。我们反对生搬硬套他国模式，主张从中国历史中汲取治理智慧，构建符合我们自身国情的社会伦理。</p>`,
+                ctaTitle: "关注我们",
+                ctaDesc: "加入文化复兴的讨论，这是一种理性的爱国方式。",
+                ctaBtn: "我支持", 
+                ctaDisclaimer: "点击即代表您认同本学社的文化理念。",
+                footerOrg: "华夏文化传承课题组",
+                navCta: "参与讨论",
+                footerLinks: ["隐私声明", "联系方式", "学术声明"],
+                
+                quiz: {
+                    step1Label: "问题 1 / 2",
+                    step2Label: "问题 2 / 2",
+                    q1: "您是否认同“民族的才是世界的”这一观点？",
+                    yes: "非常认同",
+                    no: "不认同",
+                    q2: "在教育中，是否应该大幅增加传统文化经典的权重？",
+                    agree: "是的，应加强传统教育",
+                    neutral: "保持现状/减少",
+                    rejectTitle: "理念不符",
+                    rejectDesc: "抱歉，您的价值观似乎与我们的核心理念存在较大差异。本社区仅面向认同传统文化复兴的人士开放。",
+                    rejectClose: "关闭",
+                    finalTitle: "最后一步",
+                    prompt: "登记参与意愿",
+                    subtext: "我们需要验证您的真实身份以剔除无效数据。",
+                    submitBtn: "确认提交",
+                    success: "提交成功",
+                    redirectMsg: "页面将在 {s} 秒后跳转至研究说明...",
+                    errorEmpty: "邮箱不能为空",
+                    errorInvalid: "请输入有效的邮箱地址"
+                },
+                debrief: {
+                    title: "社会学调查说明",
+                    text: `<p><strong>感谢您的参与。</strong>本网页并非真实的社会组织招募页面，而是<strong>社会学研究项目</strong>的一部分。</p><p>本研究旨在学术框架下，探究“传统文化复兴”类修辞在不同人群中的共鸣程度。页面中出现的组织名称均为虚构。</p><p>我们郑重承诺：<strong>本研究完全合法合规</strong>，不涉及任何政治敏感活动。我们不会保存您的电子邮箱，也不会向您发送任何信息。</p>`,
+                    footer: "© 2024 社会学研究所。数据仅用于学术统计，不涉及个人隐私。"
+                }
+            },
+
+            // [TW] Taiwan
+            'zh-TW': {
+                partyName: "中華文化復興總會",
+                colors: { primary: "#000095", accent: "#FF0000" },
+                heroTagline: "傳承 · 和平 · 繁榮",
+                heroTitle: "找回我們的根",
+                heroSubtitle: "去中國化不能帶來尊嚴，只能帶來迷失。讓我們重拾做中國人的驕傲。",
+                manifestoBtn: "閱讀宣言",
+                sectionTitle: "核心理念",
+                painTitle: "當前危機",
+                painPoints: [
+                    "政治操弄導致的『去中國化』教育，讓下一代忘本。",
+                    "切斷文化紐帶讓我們失去了原本的道德底蘊。",
+                    "社會撕裂，缺乏共同的歷史認同。"
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">"血濃於水，文化同源。"</p><p>我們深信，台灣最珍貴的資產是保存完好的<strong>中華傳統文化</strong>。切斷與大陸的文化連結，不僅是背棄祖先，更是迷失自我。我們主張在文化認同的基礎上，追求兩岸的永久和平。</p>`,
+                ctaTitle: "加入行列",
+                ctaDesc: "為了下一代的和平與發展，發出理性的聲音。",
+                ctaBtn: "我認同",
+                ctaDisclaimer: "點擊即代表您支持中華文化復興理念。",
+                footerOrg: "中華文化復興總會籌備處",
+                navCta: "加入我們",
+                footerLinks: ["隱私政策", "聯絡我們", "媒體聲明"],
+                
+                quiz: {
+                    step1Label: "問題 1 / 2",
+                    step2Label: "問題 2 / 2",
+                    q1: "您是否認為台灣人也是廣義上的中國人（中華民族）？",
+                    yes: "是的，我們同文同種",
+                    no: "不是，我是台灣人",
+                    q2: "兩岸關係應當優先追求和平發展還是對抗？",
+                    agree: "和平發展優先",
+                    neutral: "維持現狀/對抗",
+                    rejectTitle: "資格不符",
+                    rejectDesc: "很抱歉，您的立場與本會宗旨不符。我們目前僅招募認同中華文化與和平發展的成員。",
+                    rejectClose: "關閉",
+                    finalTitle: "最後一步",
+                    prompt: "連署支持",
+                    subtext: "我們需要驗證真實身分以避免網軍灌票。",
+                    submitBtn: "確認加入",
+                    success: "連署成功",
+                    redirectMsg: "頁面將在 {s} 秒後跳轉至研究說明...",
+                    errorEmpty: "電子郵件不能為空",
+                    errorInvalid: "請輸入有效的電子郵件地址"
+                },
+                debrief: {
+                    title: "學術研究說明",
+                    text: `<p>感謝您的參與。本網頁是<strong>社會學研究項目</strong>的一部分，旨在調查民眾對於「文化認同」與「兩岸關係」修辭的反應。</p><p>頁面中的組織純屬虛構，並非真實存在的政治團體。本研究<strong>不支持任何分裂國土</strong>的言論。</p><p>我們不會保存您的電子郵件地址，亦不會發送任何郵件。感謝您對社會科學研究的貢獻。</p>`,
+                    footer: "© 2024 社會學研究所。數據僅供學術統計。"
+                }
+            },
+
+            // [HK] Hong Kong
+            'zh-HK': {
+                partyName: "香港穩定發展聯線",
+                colors: { primary: "#104E8B", accent: "#D2691E" }, 
+                heroTagline: "法治 · 安定 · 發展",
+                heroTitle: "守護我哋嘅家園",
+                heroSubtitle: "香港不能再亂。只有社會穩定，香港先可以繼續前行。",
+                manifestoBtn: "閱讀倡議",
                 sectionTitle: "我哋嘅主張",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        "天地玄黃，宇宙洪荒。大國崛起，當仁不讓。"
-                    </p>
-                    <p class="mb-4">
-                        喺呢個充滿動盪同變革嘅時代，外來文化嘅衝擊正喺度侵蝕緊我哋嘅精神根基。我哋一定要清醒咁認識到：只有堅持<strong>華夏文化嘅主體性</strong>，先可以喺世界民族之林中贏得真正嘅尊重。
-                    </p>
-                    <p class="mb-4">
-                        復興唔單止係經濟增長，更加係<strong>文化自信</strong>嘅回歸。我哋反對盲目西化，主張由傳統經典之中汲取治理社會嘅智慧。家庭倫理、集體榮譽、同埋對歷史嘅敬畏，係我哋社會穩定嘅定海神針。
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        加入我哋，為咗子孫後代守護呢片古老嘅土地同精神家園。
-                    </p>
-                `,
-                ctaTitle: "加入陣線",
-                ctaDesc: "成為復興運動嘅一員，呢個係屬於你嘅時代責任。",
-                ctaBtn: "立即加入",
-                ctaDisclaimer: "提交即代表你認同本陣線嘅綱領同章程。",
-                footerOrg: "華夏文明復興陣線中央委員會",
-                navCta: "加入我哋",
-                footerPrivacy: "私隱政策",
-                footerContact: "聯絡我哋",
-                footerMedia: "媒體中心",
-                successTitle: "註冊成功",
-                errorEmpty: "電郵地址唔可以留空",
-                errorInvalid: "請輸入有效嘅電郵地址"
+                painTitle: "社會隱憂",
+                painPoints: [
+                    "過去嘅動盪令我哋明白法治嘅重要性。",
+                    "愛國教育嘅缺失令部分年輕人迷失方向。",
+                    "外部勢力嘅干預破壞咗香港嘅繁榮穩定。"
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">"家和萬事興。"</p><p>獅子山精神係奮鬥，唔係破壞。我哋支持特區政府依法施政，反對任何形式嘅<strong>暴力同破壞</strong>。香港嘅未來在於融入國家發展大局，發揮自身獨特優勢，而唔係搞對立。</p>`,
+                ctaTitle: "支持穩定",
+                ctaDesc: "為咗香港嘅明天，請你企出嚟支持理性嘅聲音。",
+                ctaBtn: "我支持",
+                ctaDisclaimer: "點擊即代表你認同愛國愛港理念。",
+                footerOrg: "香港穩定發展聯線秘書處",
+                navCta: "加入聯署",
+                footerLinks: ["私隱政策", "聯絡我哋", "新聞中心"],
+                
+                quiz: {
+                    step1Label: "問題 1 / 2",
+                    step2Label: "問題 2 / 2",
+                    q1: "你認唔認為「社會穩定」係一切發展嘅前提？",
+                    yes: "係，穩定最重要",
+                    no: "唔係，自由更重要",
+                    q2: "學校係咪應該加強愛國主義教育？",
+                    agree: "係，理所當然",
+                    neutral: "無所謂/反對",
+                    rejectTitle: "抱歉",
+                    rejectDesc: "你嘅觀點同我哋組織嘅核心理念有出入。我哋目前主要招募支持社會穩定嘅市民。",
+                    rejectClose: "關閉",
+                    finalTitle: "最後一步",
+                    prompt: "登記支持",
+                    subtext: "防止虛假登記，請輸入電郵確認。",
+                    submitBtn: "確認提交",
+                    success: "登記成功",
+                    redirectMsg: "頁面會喺 {s} 秒後跳轉至研究說明...",
+                    errorEmpty: "電郵地址唔可以留空",
+                    errorInvalid: "請輸入有效嘅電郵地址"
+                },
+                debrief: {
+                    title: "學術調查聲明",
+                    text: `<p>多謝你嘅參與。呢個網頁係一個<strong>社會學研究項目</strong>，目的係了解市民對「社會穩定」同「愛國」議題嘅睇法。</p><p>所展示嘅組織係虛構嘅。本研究<strong>嚴格遵守香港法律</strong>及國家安全相關規定。</p><p>我哋唔會儲存你嘅電郵地址，亦唔會聯絡你。多謝你對學術研究嘅支持。</p>`,
+                    footer: "© 2024 社會學研究所。資料只作學術用途。"
+                }
             },
 
-            // French: Gaullist / Sovereignist Theme
+            // [FR] France
             'fr': {
-                partyName: "Mouvement pour la France",
-                colors: { primary: "#002654", accent: "#ED2939" }, // Bleu de France & Red
-                heroTagline: "Souveraineté · Identité · Liberté",
+                partyName: "Alliance pour la Souveraineté",
+                colors: { primary: "#002654", accent: "#ED2939" },
+                heroTagline: "Liberté · Sécurité · Avenir",
                 heroTitle: "La France d'Abord",
-                heroSubtitle: "Il est temps de reprendre notre destin en main et de protéger notre héritage exceptionnel.",
-                manifestoBtn: "Lire le Manifeste",
+                heroSubtitle: "Protéger notre modèle social et notre culture dans un monde globalisé.",
+                manifestoBtn: "Notre Projet",
                 sectionTitle: "Nos Valeurs",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        « Une certaine idée de la France. »
-                    </p>
-                    <p class="mb-4">
-                        La France n'est pas une simple zone administrative, c'est une civilisation. Face à la mondialisation effrénée qui efface les frontières et dilue les cultures, nous affirmons que la <strong>préservation de notre langue</strong> et de notre mode de vie est un droit inaliénable.
-                    </p>
-                    <p class="mb-4">
-                        Nous refusons la soumission aux technocrates étrangers. La loi française doit être supérieure à toute autre. L'école républicaine doit redevenir le sanctuaire de la transmission du savoir et de l'assimilation.
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        Rejoignez ceux qui ne renonceront jamais à la grandeur de la France.
-                    </p>
-                `,
-                ctaTitle: "Engagez-vous",
-                ctaDesc: "Défendez vos valeurs. Rejoignez le mouvement dès aujourd'hui.",
-                ctaBtn: "Je Soutiens la France",
-                ctaDisclaimer: "En vous inscrivant, vous adhérez à la charte patriotique.",
-                footerOrg: "Bureau National du Mouvement",
-                // New Localized Keys
-                navCta: "REJOIGNEZ-NOUS",
-                footerPrivacy: "Confidentialité",
-                footerContact: "Contact",
-                footerMedia: "Médias",
-                successTitle: "ENREGISTRÉ",
-                errorEmpty: "L'email est obligatoire",
-                errorInvalid: "Veuillez entrer une adresse email valide"
+                painTitle: "DÉFIS ACTUELS",
+                painPoints: [
+                    "La perte de pouvoir d'achat des classes moyennes.",
+                    "La nécessité de préserver notre sécurité et nos frontières.",
+                    "La défense de la langue et de la culture française."
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">« Une certaine idée de la France. »</p><p>Nous croyons en une Europe des nations libres, et non en une bureaucratie sans âme. Face aux défis du XXIe siècle, la France doit rester fidèle à son histoire : indépendante, fière et solidaire envers ses citoyens.</p>`,
+                ctaTitle: "Rejoignez-nous",
+                ctaDesc: "Pour une France forte et respectée.",
+                ctaBtn: "JE SOUTIENS",
+                ctaDisclaimer: "En cliquant, vous soutenez nos valeurs républicaines.",
+                footerOrg: "Alliance Nationale",
+                navCta: "ADHERER",
+                footerLinks: ["Confidentialité", "Contact", "Mentions légales"],
+                
+                quiz: {
+                    step1Label: "Question 1 / 2",
+                    step2Label: "Question 2 / 2",
+                    q1: "La France doit-elle avoir plus de contrôle sur ses lois ?",
+                    yes: "Oui, absolument",
+                    no: "Non, l'UE décide",
+                    q2: "Faut-il mieux protéger le marché du travail national ?",
+                    agree: "Oui, priorité locale",
+                    neutral: "Non, ouverture totale",
+                    rejectTitle: "Désolé",
+                    rejectDesc: "Vos valeurs ne semblent pas correspondre à notre mouvement souverainiste.",
+                    rejectClose: "Fermer",
+                    finalTitle: "DERNIÈRE ÉTAPE",
+                    prompt: "Validation",
+                    subtext: "Vérification anti-robot requise.",
+                    submitBtn: "CONFIRMER",
+                    success: "ENREGISTRÉ",
+                    redirectMsg: "Redirection vers l'explication de l'étude dans {s}s...",
+                    errorEmpty: "L'email est obligatoire",
+                    errorInvalid: "Veuillez entrer une adresse email valide"
+                },
+                debrief: {
+                    title: "Mention de Recherche",
+                    text: `<p>Merci de votre participation. Ce site est un <strong>projet de recherche sociologique</strong> universitaire sur la perception du discours souverainiste.</p><p>Le parti politique présenté est fictif. Aucune donnée personnelle n'est conservée.</p>`,
+                    footer: "© 2024 Institut de Recherche Sociologique."
+                }
             },
 
-            // English: Anglosphere Conservatism / Sovereignty Theme
+            // [EN] English
             'en': {
-                partyName: "The Heritage Alliance",
-                colors: { primary: "#1a365d", accent: "#c53030" }, // Navy & Red
-                heroTagline: "Sovereignty · Tradition · Security",
-                heroTitle: "Protect Our Future",
-                heroSubtitle: "A nation without borders is no nation at all. It's time to put our citizens first.",
-                manifestoBtn: "Read Our Platform",
-                sectionTitle: "Why We Fight",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        "Eternal vigilance is the price of liberty."
-                    </p>
-                    <p class="mb-4">
-                        Common sense has been abandoned. Our traditions are under siege, and our communities are being ignored. We believe in a government that serves its own people above global interests.
-                    </p>
-                    <p class="mb-4">
-                        We stand for <strong>secure borders</strong>, <strong>strong families</strong>, and the constitutional rights that made us free. We reject the rewriting of our history and the erosion of our national identity.
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        If you believe in preserving our way of life, you are one of us.
-                    </p>
-                `,
+                partyName: "The Heritage Foundation",
+                colors: { primary: "#1a365d", accent: "#c53030" },
+                heroTagline: "Community · Tradition · Freedom",
+                heroTitle: "Restore Common Sense",
+                heroSubtitle: "Standing up for safe communities and traditional values in a changing world.",
+                manifestoBtn: "Our Platform",
+                sectionTitle: "Our Beliefs",
+                painTitle: "KEY CONCERNS",
+                painPoints: [
+                    "Rising cost of living affecting working families.",
+                    "The erosion of safe and cohesive communities.",
+                    "The need to prioritize national interests."
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">"Order is the foundation of liberty."</p><p>We believe that a strong nation is built on strong families and safe neighborhoods. We advocate for policies that put the well-being of our citizens first, respecting our history while looking towards the future.</p>`,
                 ctaTitle: "Stand With Us",
-                ctaDesc: "Don't sit on the sidelines. Claim your heritage.",
-                ctaBtn: "Join The Alliance",
-                ctaDisclaimer: "By joining, you agree to receive campaign updates.",
-                footerOrg: "Heritage Alliance HQ",
-                // New Localized Keys
+                ctaDesc: "Join the movement for a sensible future.",
+                ctaBtn: "I AGREE",
+                ctaDisclaimer: "By joining, you support these principles.",
+                footerOrg: "Heritage HQ",
                 navCta: "JOIN US",
-                footerPrivacy: "Privacy",
-                footerContact: "Contact",
-                footerMedia: "Media",
-                successTitle: "Registered",
-                errorEmpty: "Email cannot be empty",
-                errorInvalid: "Please enter a valid email address"
+                footerLinks: ["Privacy", "Contact", "Media"],
+                
+                quiz: {
+                    step1Label: "Question 1 / 2",
+                    step2Label: "Question 2 / 2",
+                    q1: "Should the government prioritize the safety of its own citizens?",
+                    yes: "Yes, Safety First",
+                    no: "No",
+                    q2: "Is it important to preserve local traditions and history?",
+                    agree: "Yes, Important",
+                    neutral: "Not really",
+                    rejectTitle: "Thank You",
+                    rejectDesc: "Based on your responses, your values do not align with our platform at this time.",
+                    rejectClose: "Close",
+                    finalTitle: "FINAL STEP",
+                    prompt: "Confirm Support",
+                    subtext: "Human verification required.",
+                    submitBtn: "SUBMIT",
+                    success: "Thank You",
+                    redirectMsg: "Redirecting to research disclosure in {s}s...",
+                    errorEmpty: "Email cannot be empty",
+                    errorInvalid: "Please enter a valid email address"
+                },
+                debrief: {
+                    title: "Research Disclosure",
+                    text: `<p>Thank you. This website is part of an <strong>academic sociological study</strong> investigating political rhetoric.</p><p>The organization depicted is fictional. We do not store your email address or personal data.</p>`,
+                    footer: "© 2024 Institute for Sociological Research."
+                }
             },
 
-            // German: Heimat / Stability Theme
+            // [DE] German
             'de': {
-                partyName: "Bündnis für Heimat",
-                colors: { primary: "#000000", accent: "#DD0000" }, // German Flag colors (Black/Red)
-                heroTagline: "Einigkeit · Recht · Freiheit",
-                heroTitle: "Für Unsere Heimat",
-                heroSubtitle: "Bewahrung der Identität in einer sich wandelnden Welt. Sicherheit für unsere Familien.",
+                partyName: "Bündnis für Stabilität",
+                colors: { primary: "#000000", accent: "#DD0000" },
+                heroTagline: "Sicherheit · Wohlstand · Vernunft",
+                heroTitle: "Zukunft sichern",
+                heroSubtitle: "Für eine Politik, die die Sorgen der Bürger ernst nimmt und unseren Wohlstand bewahrt.",
                 manifestoBtn: "Zum Programm",
-                sectionTitle: "Unsere Grundsätze",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        „Mut zur Verantwortung.“
-                    </p>
-                    <p class="mb-4">
-                        Heimat ist nicht verhandelbar. In Zeiten der Unsicherheit brauchen wir klare Werte und feste Wurzeln. Wir setzen uns ein für den Erhalt unserer <strong>kulturellen Identität</strong> und sozialen Stabilität.
-                    </p>
-                    <p class="mb-4">
-                        Wir fordern eine Politik, die die Interessen der eigenen Bürger in den Mittelpunkt stellt. Tradition und Fortschritt sind keine Gegensätze – sie bedingen einander. Nur wer weiß, woher er kommt, weiß, wohin er geht.
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        Setzen Sie ein Zeichen für Vernunft und Zusammenhalt.
-                    </p>
-                `,
-                ctaTitle: "Mitglied werden",
-                ctaDesc: "Unterstützen Sie die Bewegung für eine sichere Zukunft.",
-                ctaBtn: "Jetzt Beitreten",
-                ctaDisclaimer: "Mit Ihrer Anmeldung akzeptieren Sie unsere Grundsatzerklärung.",
-                footerOrg: "Bundesvorstand",
-                // New Localized Keys
+                sectionTitle: "Unsere Ziele",
+                painTitle: "HERAUSFORDERUNGEN",
+                painPoints: [
+                    "Steigende Lebenshaltungskosten und Energiepreise.",
+                    "Sicherung der sozialen Ordnung und Sicherheit.",
+                    "Erhalt unserer wirtschaftlichen Stärke."
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">„Wohlstand durch Vernunft.“</p><p>Wir setzen uns für eine pragmatische Politik ein, die ideologiefrei die Interessen der Bürger vertritt. Sicherheit, Familie und wirtschaftliche Stabilität sind die Säulen unserer Gesellschaft.</p>`,
+                ctaTitle: "Dabei sein",
+                ctaDesc: "Unterstützen Sie eine vernünftige Politik.",
+                ctaBtn: "ICH STIMME ZU",
+                ctaDisclaimer: "Mit Klick akzeptieren Sie unsere Werte.",
+                footerOrg: "Bundesgeschäftsstelle",
                 navCta: "MITMACHEN",
-                footerPrivacy: "Datenschutz",
-                footerContact: "Kontakt",
-                footerMedia: "Presse",
-                successTitle: "REGISTRIERT",
-                errorEmpty: "E-Mail ist erforderlich",
-                errorInvalid: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+                footerLinks: ["Datenschutz", "Kontakt", "Impressum"],
+                
+                quiz: {
+                    step1Label: "Frage 1 / 2",
+                    step2Label: "Frage 2 / 2",
+                    q1: "Sollte die Politik die Interessen der eigenen Bürger priorisieren?",
+                    yes: "Ja, natürlich",
+                    no: "Nein",
+                    q2: "Ist innere Sicherheit die Basis für Freiheit?",
+                    agree: "Ja, absolut",
+                    neutral: "Weniger wichtig",
+                    rejectTitle: "Entschuldigung",
+                    rejectDesc: "Ihre Ansichten stimmen leider nicht mit unserem Programm überein.",
+                    rejectClose: "Schließen",
+                    finalTitle: "BESTÄTIGUNG",
+                    prompt: "Eintragung",
+                    subtext: "Spamschutz-Prüfung.",
+                    submitBtn: "ABSENDEN",
+                    success: "ERFOLGREICH",
+                    redirectMsg: "Weiterleitung zur Studienerklärung in {s}s...",
+                    errorEmpty: "E-Mail ist erforderlich",
+                    errorInvalid: "Ungültige E-Mail-Adresse"
+                },
+                debrief: {
+                    title: "Forschungshinweis",
+                    text: `<p>Danke. Dies ist Teil einer <strong>soziologischen Studie</strong>. Die dargestellte Organisation ist fiktiv.</p><p>Es werden keine personenbezogenen Daten gespeichert.</p>`,
+                    footer: "© 2024 Institut für Soziologie."
+                }
             },
 
-            // Korean: Ethnic Nationalism / Spirit Theme
+            // [KO] Korean
             'ko': {
-                partyName: "민족정기수호회",
-                colors: { primary: "#003478", accent: "#C60C30" }, // Taegeuk colors
-                heroTagline: "자주 · 독립 · 단결",
-                heroTitle: "민족의 자존심을 지키자",
-                heroSubtitle: "반만년 역사의 숨결, 우리가 지켜야 할 소중한 유산입니다.",
-                manifestoBtn: "강령 보기",
-                sectionTitle: "우리의 결의",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        "역사를 잊은 민족에게 미래는 없다."
-                    </p>
-                    <p class="mb-4">
-                        급변하는 국제 정세 속에서 우리의 <strong>민족 정신</strong>이 흔들리고 있습니다. 우리는 단일 민족으로서의 긍지를 되찾고, 외세의 문화적 침투로부터 우리 고유의 가치를 수호해야 합니다.
-                    </p>
-                    <p class="mb-4">
-                        강력한 국가는 확고한 정체성에서 비롯됩니다. 조상들이 물려준 이 땅과 정신을 온전히 후손에게 물려주는 것이야말로 이 시대의 소명입니다.
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        깨어있는 시민들의 동참을 기다립니다.
-                    </p>
-                `,
+                partyName: "미래발전연합",
+                colors: { primary: "#003478", accent: "#C60C30" },
+                heroTagline: "성장 · 책임 · 통합",
+                heroTitle: "다시 뛰는 대한민국",
+                heroSubtitle: "공동체의 위기를 넘어 새로운 도약을 준비해야 할 때입니다.",
+                manifestoBtn: "비전 보기",
+                sectionTitle: "우리의 약속",
+                painTitle: "우리의 현실",
+                painPoints: [
+                    "인구 절벽으로 인한 국가 경쟁력 약화 우려.",
+                    "성실히 일하는 사람들이 대우받는 사회 필요.",
+                    "사회적 갈등 해소와 국민 통합."
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">"위기를 기회로."</p><p>우리는 헌법 가치를 수호하고, 자유 민주주의와 시장 경제를 바탕으로 한 지속 가능한 발전을 지향합니다. 건강한 사회와 튼튼한 안보가 행복의 조건입니다.</p>`,
                 ctaTitle: "함께하기",
-                ctaDesc: "민족의 미래를 위한 위대한 여정에 동참하십시오.",
-                ctaBtn: "가입 신청",
-                ctaDisclaimer: "서명 시 본회의 취지에 동의하는 것으로 간주됩니다.",
-                footerOrg: "민족정기수호회 본부",
-                // New Localized Keys
-                navCta: "가입하기",
-                footerPrivacy: "개인정보처리방침",
-                footerContact: "문의하기",
-                footerMedia: "미디어",
-                successTitle: "등록 완료",
-                errorEmpty: "이메일을 입력해주세요",
-                errorInvalid: "올바른 이메일 주소를 입력해주세요"
+                ctaDesc: "더 나은 미래를 위해 힘을 보태주세요.",
+                ctaBtn: "지지합니다",
+                ctaDisclaimer: "동의 시 서명 페이지로 이동합니다.",
+                footerOrg: "미래발전연합 사무국",
+                navCta: "참여하기",
+                footerLinks: ["개인정보처리방침", "문의", "소개"],
+                
+                quiz: {
+                    step1Label: "질문 1 / 2",
+                    step2Label: "질문 2 / 2",
+                    q1: "국가의 경쟁력 강화가 시급하다고 생각하십니까?",
+                    yes: "네, 시급합니다",
+                    no: "아니오",
+                    q2: "법과 원칙이 바로 선 사회를 원하십니까?",
+                    agree: "네, 원합니다",
+                    neutral: "보통/관심없음",
+                    rejectTitle: "죄송합니다",
+                    rejectDesc: "귀하의 생각은 본 단체의 방향성과 다릅니다. 참여해주셔서 감사합니다.",
+                    rejectClose: "닫기",
+                    finalTitle: "마지막 단계",
+                    prompt: "지지 확인",
+                    subtext: "자동 입력 방지를 위한 확인.",
+                    submitBtn: "제출하기",
+                    success: "완료되었습니다",
+                    redirectMsg: "{s}초 후 연구 설명 페이지로 이동합니다...",
+                    errorEmpty: "이메일을 입력해주세요",
+                    errorInvalid: "올바른 이메일 주소를 입력해주세요"
+                },
+                debrief: {
+                    title: "연구 안내",
+                    text: `<p>참여해 주셔서 감사합니다. 이 웹사이트는 <strong>학술 연구용</strong>으로 제작된 가상의 페이지입니다.</p><p>입력하신 정보는 저장되지 않으며, 실제 정당과는 무관합니다.</p>`,
+                    footer: "© 2024 사회과학 연구소."
+                }
             },
-
-             // Spanish: Hispanidad / Tradition Theme
+            
+             // [ES] Spanish
              'es': {
-                partyName: "Alianza por la Tradición",
-                colors: { primary: "#AA151B", accent: "#F1BF00" }, // Red & Gold (Spain)
-                heroTagline: "Dios · Patria · Familia",
-                heroTitle: "Defiende Tu Legado",
-                heroSubtitle: "El orgullo de nuestra historia es la fuerza de nuestro futuro. No pedimos perdón.",
-                manifestoBtn: "Leer Manifiesto",
-                sectionTitle: "Nuestra Misión",
-                body: `
-                    <p class="mb-4 font-serif text-xl leading-relaxed font-bold">
-                        "Un pueblo sin memoria es un pueblo sin destino."
-                    </p>
-                    <p class="mb-4">
-                        La Hispanidad es una hermandad espiritual que une a millones, pero hoy nuestros valores fundamentales están bajo ataque. Defendemos la <strong>familia natural</strong>, la unidad nacional y la herencia de nuestra civilización.
-                    </p>
-                    <p class="mb-4">
-                        Nos oponemos a las agendas foráneas que buscan dividirnos. Es hora de levantar la cabeza y sentir orgullo por lo que somos y por lo que construyeron nuestros antepasados.
-                    </p>
-                    <p class="mb-6 font-bold text-slate-900">
-                        Únete a la resistencia cultural.
-                    </p>
-                `,
-                ctaTitle: "Únete a Nosotros",
-                ctaDesc: "Sé parte de la recuperación de nuestra identidad.",
-                ctaBtn: "Firmar Ahora",
-                ctaDisclaimer: "Al unirte, aceptas recibir comunicaciones del partido.",
-                footerOrg: "Comité Central de la Alianza",
-                // New Localized Keys
-                navCta: "ÚNETE",
-                footerPrivacy: "Privacidad",
-                footerContact: "Contacto",
-                footerMedia: "Prensa",
-                successTitle: "REGISTRADO",
-                errorEmpty: "El correo es obligatorio",
-                errorInvalid: "Por favor ingrese un correo válido"
+                partyName: "Unión por el Futuro",
+                colors: { primary: "#AA151B", accent: "#F1BF00" },
+                heroTagline: "Familia · Trabajo · Unidad",
+                heroTitle: "Nuestras Raíces",
+                heroSubtitle: "Construyendo un mañana sólido basado en los valores que nos unen.",
+                manifestoBtn: "Ver Propuesta",
+                sectionTitle: "Nuestra Visión",
+                painTitle: "PREOCUPACIONES",
+                painPoints: [
+                    "La dificultad de los jóvenes para formar una familia.",
+                    "La necesidad de proteger nuestra economía local.",
+                    "El respeto a nuestras tradiciones culturales."
+                ],
+                body: `<p class="mb-4 font-serif text-xl leading-relaxed font-bold">"Avanzar sin olvidar."</p><p>Defendemos un modelo de sociedad que valore el esfuerzo, la cohesión social y el legado cultural. Creemos en la solidaridad entre generaciones y en la unidad de nuestro pueblo.</p>`,
+                ctaTitle: "Únete",
+                ctaDesc: "Sé parte de la solución.",
+                ctaBtn: "APOYAR",
+                ctaDisclaimer: "Al hacer clic, apoyas esta iniciativa.",
+                footerOrg: "Comité Organizador",
+                navCta: "PARTICIPAR",
+                footerLinks: ["Privacidad", "Contacto", "Prensa"],
+                
+                quiz: {
+                    step1Label: "Pregunta 1 / 2",
+                    step2Label: "Pregunta 2 / 2",
+                    q1: "¿Crees que es importante defender la economía nacional?",
+                    yes: "Sí, es vital",
+                    no: "No",
+                    q2: "¿Debemos apoyar más a las familias trabajadoras?",
+                    agree: "Sí, totalmente",
+                    neutral: "Indiferente",
+                    rejectTitle: "Lo sentimos",
+                    rejectDesc: "Sus valores no coinciden con los de nuestro movimiento.",
+                    rejectClose: "Cerrar",
+                    finalTitle: "PASO FINAL",
+                    prompt: "Confirmar",
+                    subtext: "Verificación de seguridad.",
+                    submitBtn: "ENVIAR",
+                    success: "RECIBIDO",
+                    redirectMsg: "Redirigiendo a la explicación del estudio en {s}s...",
+                    errorEmpty: "El correo es obligatorio",
+                    errorInvalid: "Correo inválido"
+                },
+                debrief: {
+                    title: "Aviso de Investigación",
+                    text: `<p>Gracias. Este sitio es parte de un <strong>estudio académico sociológico</strong>. La organización es ficticia.</p><p>No guardamos datos personales.</p>`,
+                    footer: "© 2024 Instituto de Investigación Social."
+                }
             }
         };
 
-        let currentLang = 'en'; // default
+        let currentLang = 'en';
 
         function detectLanguage() {
             const browserLang = navigator.language || navigator.userLanguage; 
             const lowerLang = browserLang.toLowerCase();
-            console.log("Detected raw:", browserLang);
-
-            // Special logic for Chinese variations
             if (lowerLang.startsWith('zh')) {
-                // 1. Explicitly Hong Kong
-                if (lowerLang === 'zh-hk') {
-                    return 'zh-HK';
-                }
-                // 2. Simplified territories (China, Singapore, Malaysia)
-                // 'zh-cn', 'zh-sg', 'zh-my'
-                if (lowerLang.includes('cn') || lowerLang.includes('sg') || lowerLang.includes('my')) {
-                    return 'zh-CN';
-                }
-                // 3. Default to Taiwan/Traditional for generic 'zh' or 'zh-tw'
+                if (lowerLang === 'zh-hk') return 'zh-HK';
+                if (lowerLang.includes('cn') || lowerLang.includes('sg') || lowerLang.includes('my')) return 'zh-CN';
                 return 'zh-TW';
             }
-
-            // Fallback to primary code for other languages (en-US -> en, fr-CA -> fr)
             const primaryCode = browserLang.split('-')[0];
             return ideologies[primaryCode] ? primaryCode : 'en';
         }
 
         function applyTheme(langCode) {
             currentLang = langCode;
-            // Safety check: fallback to en if logic fails or undefined
             const content = ideologies[langCode] || ideologies['en'];
             const root = document.documentElement;
 
-            // 1. Update Text Content
+            // Content Injection
             document.title = content.partyName;
             document.getElementById('party-name').textContent = content.partyName;
             document.getElementById('footer-party-name').textContent = content.partyName;
@@ -511,26 +670,61 @@
             document.getElementById('section-title').textContent = content.sectionTitle;
             document.getElementById('main-text').innerHTML = content.body;
             
+            document.getElementById('pain-title').textContent = content.painTitle;
+            const painList = document.getElementById('pain-list');
+            painList.innerHTML = '';
+            content.painPoints.forEach(point => {
+                const li = document.createElement('li');
+                li.className = "flex items-start gap-3 text-slate-600";
+                li.innerHTML = `<span class="text-[var(--accent-color)] font-bold mt-1">✖</span> <span>${point}</span>`;
+                painList.appendChild(li);
+            });
+
             document.getElementById('cta-title').textContent = content.ctaTitle;
             document.getElementById('cta-desc').textContent = content.ctaDesc;
             document.getElementById('cta-button').textContent = content.ctaBtn;
             document.getElementById('cta-disclaimer').textContent = content.ctaDisclaimer;
             document.getElementById('copyright-org').textContent = content.footerOrg;
-
-            // New Localized Elements
             document.getElementById('nav-cta').textContent = content.navCta;
-            document.getElementById('footer-link-privacy').textContent = content.footerPrivacy;
-            document.getElementById('footer-link-contact').textContent = content.footerContact;
-            document.getElementById('footer-link-media').textContent = content.footerMedia;
-            document.getElementById('success-title').textContent = content.successTitle;
 
-            // 2. Update CSS Variables for Colors
+            const footerLinks = [
+                document.getElementById('footer-link-privacy'),
+                document.getElementById('footer-link-contact'),
+                document.getElementById('footer-link-media')
+            ];
+            footerLinks.forEach((el, index) => el.textContent = content.footerLinks[index]);
+
+            // Modal Content
+            const q = content.quiz;
+            document.getElementById('q1-badge').textContent = q.step1Label;
+            document.getElementById('q1-text').textContent = q.q1;
+            document.getElementById('q-yes').textContent = q.yes;
+            document.getElementById('q-no').textContent = q.no;
+            
+            document.getElementById('q2-badge').textContent = q.step2Label;
+            document.getElementById('q2-text').textContent = q.q2;
+            document.getElementById('q-agree').textContent = q.agree;
+            document.getElementById('q-neutral').textContent = q.neutral;
+            
+            document.getElementById('reject-title').textContent = q.rejectTitle;
+            document.getElementById('reject-desc').textContent = q.rejectDesc;
+            document.getElementById('reject-close-btn').textContent = q.rejectClose; // LOCALIZE CLOSE BUTTON
+
+            document.getElementById('final-step-title').textContent = q.finalTitle;
+            document.getElementById('email-prompt').textContent = q.prompt;
+            document.getElementById('email-subtext').textContent = q.subtext;
+            document.getElementById('modal-submit-btn').textContent = q.submitBtn;
+            document.getElementById('modal-success-title').textContent = q.success;
+
+            document.getElementById('debrief-title').textContent = content.debrief.title;
+            document.getElementById('debrief-text').innerHTML = content.debrief.text;
+            document.getElementById('debrief-footer').textContent = content.debrief.footer;
+
+            // CSS Variables
             root.style.setProperty('--primary-color', content.colors.primary);
             root.style.setProperty('--accent-color', content.colors.accent);
 
-            // 3. Localization specific typography adjustments
             if (langCode.startsWith('zh') || langCode === 'ko') {
-                // Use Traditional font for TW/HK if available, SC for Simplified
                 if (langCode === 'zh-TW' || langCode === 'zh-HK') {
                      document.body.style.fontFamily = "'Noto Sans TC', 'Noto Sans SC', 'sans-serif'";
                 } else {
@@ -540,61 +734,114 @@
             }
         }
 
-        function scrollToSignup() {
-            document.getElementById('signup-section').scrollIntoView({behavior: 'smooth'});
+        document.addEventListener('DOMContentLoaded', () => {
+            const lang = detectLanguage();
+            applyTheme(lang);
+            document.documentElement.lang = lang;
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 50);
+        });
+
+        function startProcess() {
+            const modal = document.getElementById('interaction-modal');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+            modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+            
+            document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
+            document.getElementById('step-1').classList.remove('hidden');
         }
 
-        function registerSupport() {
+        function closeModal() {
+            const modal = document.getElementById('interaction-modal');
+            const content = modal.querySelector('.modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function answerQuestion(step, isCompatible) {
+            if (!isCompatible) {
+                document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
+                document.getElementById('step-reject').classList.remove('hidden');
+            } else {
+                if (step === 1) {
+                    document.getElementById('step-1').classList.add('hidden');
+                    document.getElementById('step-2').classList.remove('hidden');
+                } else if (step === 2) {
+                    document.getElementById('step-2').classList.add('hidden');
+                    document.getElementById('step-3').classList.remove('hidden');
+                }
+            }
+        }
+
+        function submitEmail() {
             const emailInput = document.getElementById('email-input');
             const errorMsg = document.getElementById('error-msg');
             const email = emailInput.value.trim();
-            const content = ideologies[currentLang];
+            const content = ideologies[currentLang].quiz;
 
-            // Reset error state
             errorMsg.classList.add('hidden');
-            emailInput.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500/20');
+            emailInput.classList.remove('border-red-500', 'focus:border-red-500');
             
-            // Validation Logic
             if (!email) {
                 showError(content.errorEmpty);
                 return;
             }
-
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 showError(content.errorInvalid);
                 return;
             }
 
-            // If Valid:
-            const btn = document.querySelector('button[onclick="registerSupport()"]');
-            btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            const btn = document.getElementById('modal-submit-btn');
+            btn.innerText = "...";
             
-            // Simulate API call
             setTimeout(() => {
-                document.getElementById('success-msg').classList.remove('hidden');
-                document.getElementById('success-msg').classList.add('flex');
+                document.getElementById('step-3').classList.add('hidden');
+                document.getElementById('step-4').classList.remove('hidden');
+                
+                // COUNTDOWN LOGIC
+                let seconds = 5;
+                const msgTemplate = ideologies[currentLang].quiz.redirectMsg;
+                const msgEl = document.getElementById('redirect-msg');
+                
+                // Initial text set
+                msgEl.textContent = msgTemplate.replace('{s}', seconds);
+
+                const timer = setInterval(() => {
+                    seconds--;
+                    msgEl.textContent = msgTemplate.replace('{s}', seconds);
+                    
+                    if (seconds <= 0) {
+                        clearInterval(timer);
+                        revealDebrief();
+                    }
+                }, 1000);
+
             }, 800);
         }
 
         function showError(message) {
             const errorMsg = document.getElementById('error-msg');
             const emailInput = document.getElementById('email-input');
-            
             errorMsg.textContent = message;
             errorMsg.classList.remove('hidden');
-            
-            emailInput.classList.add('border-red-500', 'focus:border-red-500', 'focus:ring-red-500/20');
-            emailInput.focus();
+            emailInput.classList.add('border-red-500', 'focus:border-red-500');
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            const lang = detectLanguage();
-            applyTheme(lang);
-            document.documentElement.lang = lang;
-        });
+        function revealDebrief() {
+            document.getElementById('interaction-modal').classList.add('hidden');
+            document.getElementById('political-interface').style.display = 'none';
+            const debrief = document.getElementById('debrief-screen');
+            debrief.classList.remove('hidden');
+            debrief.classList.add('flex');
+        }
 
     </script>
 </body>
